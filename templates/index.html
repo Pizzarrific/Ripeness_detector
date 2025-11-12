@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fruit Ripeness Detection</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ffdd57;
+        }
+        form {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        form:hover {
+            transform: scale(1.02);
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+            color: #f0f0f0;
+        }
+        input[type="submit"] {
+            background-color: #ffdd57;
+            color: #222;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #ffe97f;
+        }
+        .preview {
+            margin-top: 20px;
+        }
+        .preview img {
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Fruit Ripeness Detection</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required><br>
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if uploaded_image %}
+        <div class="preview">
+            <img src="{{ url_for('static', filename='uploads/' + uploaded_image) }}" alt="Uploaded Image">
+        </div>
+    {% endif %}
+
+    {% if result %}
+        <div class="result">{{ result }}</div>
+    {% endif %}
+</body>
+</html>
